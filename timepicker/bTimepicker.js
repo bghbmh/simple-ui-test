@@ -8,8 +8,8 @@ export class Timepicker {
     static documentMouseMoveHandler = null;
 	static documentResizeHandler = null;
 
-	boundHandleClickOutside = null; // 생성자에서 바인딩할 것이므로 null로 초기화
-    boundResizeHandler = null; // 생성자에서 바인딩할 것이므로 null로 초기화
+	boundHandleClickOutside = null; //
+    boundResizeHandler = null; // 
 
 	constructor(obj, args) {
 
