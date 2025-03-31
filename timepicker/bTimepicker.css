@@ -22,9 +22,10 @@
 
 
 :root{
-	--btime-text-color: hsl(0, 0%, 7%);
-	--btime-border-color: hsl(0, 0%, 65%);
+	--btime-text-color: hsl(0 0% 7%);
+	--btime-border-color: hsl(0 0% 65%);
 	--btime-border-radius : 6px;
+	--btime-placeholder-color : hsl(0 0% 75%);
 }
 
 input.bTimepicker-init{
@@ -44,15 +45,18 @@ input.bTimepicker-init{
 	min-height: 42px;
 
 }
+input.bTimepicker-init::placeholder{ color: var(--btime-placeholder-color); }
 .bTimepicker-init {
 	background-image: url("data:image/svg+xml,%3Csvg width='21' height='20' viewBox='0 0 21 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='hsl(200deg 5%25 80%25)' fill-rule='evenodd' clip-rule='evenodd' d='M10.2744 20C15.7973 20 20.2744 15.5228 20.2744 10C20.2744 4.47715 15.7973 0 10.2744 0C4.75157 0 0.274414 4.47715 0.274414 10C0.274414 15.5228 4.75157 20 10.2744 20ZM11.2744 4.16797C11.2744 3.61568 10.8267 3.16797 10.2744 3.16797C9.72213 3.16797 9.27441 3.61568 9.27441 4.16797V10.168C9.27441 10.5467 9.48842 10.893 9.8272 11.0624L13.8272 13.0624C14.3212 13.3094 14.9219 13.1092 15.1688 12.6152C15.4158 12.1212 15.2156 11.5205 14.7216 11.2735L11.2744 9.54993V4.16797Z' /%3E%3C/svg%3E%0A");
 
 	background-repeat: no-repeat;
-	background-position: 8px center;
-	padding-left: 2.5em !important;
-	flex: 0 1 auto;
-	width: 10em !important;
+	background-position: .65em center;
+	padding-left: 2.6em !important;
+	flex:	0 1 auto;
+	width: calc( 8em + 2.6em) !important;
 	letter-spacing: 1px;
+	min-width: 8em;
+	background-size: 1.3em;
 }
 
 
@@ -77,6 +81,7 @@ input.bTimepicker-init{
 
 	box-shadow: 0 8px 15px 10px hsl( 0deg 0% 0% / .1);
 	overflow: hidden;
+	
 }
 
 .bTimepicker-wrap:before{
@@ -93,7 +98,7 @@ input.bTimepicker-init{
 	mix-blend-mode: darken;
 }
 .bTimepicker-wrap:has(.ctrl)::before{
-	top: calc(50% - ( var(--ctrl-height) / 2 ));
+	top: calc(50% - 3px - ( var(--ctrl-height) / 2 ));
 }
 
 .bTimepicker-wrap [class*="-wrap"]{
@@ -133,10 +138,17 @@ input.bTimepicker-init{
 
 	transition: all .3s ease-out;
 	font-size: 1em;
+
+	-ms-user-select: none;
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
 }
 
 .bTimepicker-wrap .selected{ 
 	font-weight: 600; opacity: 1;
+	color: var(--btime-text-color);
 	/* height: var(--item-height-selected);  
 	line-height: var(--item-height-selected); */
 }
@@ -148,6 +160,7 @@ input.bTimepicker-init{
 	top: 100%;
 	display:  flex;
 	width: 100%;
+	height: var(--item-height);
 	border-top: 1px solid #f0f0f0;
 	
 	/* box-shadow: 0 8px 15px 0px hsl( 0deg 0% 0% / .1); */
@@ -165,7 +178,7 @@ input.bTimepicker-init{
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: var(--ctrl-height);
+	height: 100%;
 	color: #767676;
 	font-size: calc(1em - 2px);
 	
@@ -194,7 +207,7 @@ input.bTimepicker-init{
 	mask-repeat: no-repeat;
 
 	-webkit-mask-size: contain;
-mask-size: contain;
+	mask-size: contain;
 
 }
 .bTimepicker-wrap .ctrl .ok{ color: #0a73e2;}
