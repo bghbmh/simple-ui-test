@@ -2,14 +2,14 @@
 
 export class Timepicker {
 
-    static initInputTimepickerCount = 0; // 열려있는 타임피커의 수를 추적
+    	static initInputTimepickerCount = 0; // 열려있는 타임피커의 수를 추적
 	
 	static documentMouseUpHandler = null;
-    static documentMouseMoveHandler = null;
+    	static documentMouseMoveHandler = null;
 	static documentResizeHandler = null;
 
 	boundHandleClickOutside = null; //
-    boundResizeHandler = null; // 
+    	boundResizeHandler = null; //
 
 	constructor(obj, args) {
 
@@ -204,8 +204,6 @@ export class Timepicker {
 	createInitTime() {
 		for (const [key, value] of Object.entries(this.selectedTime)) {
 			const o = this.timepickerElements[key]?.zOptions;
-
-            
 
             if (o) {
                 console.log("2 - tTarget children:", [...o.tTarget.children].map(ch => ch.textContent));
@@ -417,7 +415,7 @@ export class Timepicker {
 			if (!isTouched) return;
 			const deltaY = e.touches[0].clientY - touchStartY;
 
-			if (!isTouchDragging && Math.abs(deltaY) > 5) { // Small threshold to consider it as dragging
+			if (!isTouchDragging && Math.abs(deltaY) > 5) { //
 				isTouchDragging = true;
 			}
         }, { passive: true }); // preventDefault 사용 시 passive: false 필요
