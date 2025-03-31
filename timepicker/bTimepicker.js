@@ -1,20 +1,20 @@
 
-
 export class Timepicker {
 
-    	static initInputTimepickerCount = 0; // 열려있는 타임피커의 수를 추적
-	
+
+	static initInputTimepickerCount = 0; // 열려있는 타임피커의 수를 추적
+
 	static documentMouseUpHandler = null;
-    	static documentMouseMoveHandler = null;
+	static documentMouseMoveHandler = null;
 	static documentResizeHandler = null;
 
 	boundHandleClickOutside = null; //
-    	boundResizeHandler = null; //
+	boundResizeHandler = null; //
 
 	constructor(obj, args) {
 
 		this.boundHandleClickOutside = this.handleClickOutside.bind(this); // 바인딩
-        this.boundResizeHandler = reTime.debounce(this.setPositionTimepickerWrapper.bind(this, 'transition: all .3s;')); //바인딩
+		this.boundResizeHandler = reTime.debounce(this.setPositionTimepickerWrapper.bind(this, 'transition: all .3s;')); //바인딩
 
 
 		this.timepickerInput = obj;
@@ -30,7 +30,7 @@ export class Timepicker {
 
 		this.isTimepickerVisible = false;
 		this.isMouse = false;
-        this.userOS = this.getUserOS();   // 매직마우스 휠과 일반 마우스 휠이 달라 os를 확인함
+		this.userOS = this.getUserOS();   // 매직마우스 휠과 일반 마우스 휠이 달라 os를 확인함
 
 		this.initDefaultValues(args);// 사용자 정의 초기값 설정
 		this.initTime(args);
@@ -42,10 +42,10 @@ export class Timepicker {
 		reTime.initInputTimepickerCount++; // 타임피커를 사용하는 요소 개수
 
 		this.msgList = {
-            t1: `초기 설정 값과 입력 값을 확인해주세요 `
-        };
-		
-        console.log("done reTime", reTime.initInputTimepickerCount);
+			t1: `초기 설정 값과 입력 값을 확인해주세요 `
+		};
+
+		console.log("done reTime", reTime.initInputTimepickerCount);
 	}
 
 	// 브라우저 정보 확인
@@ -63,14 +63,14 @@ export class Timepicker {
 	initializeDefaults(args) {
 		return {
 			timeFormat: 'ap hh:mm',
-            ampm: false, // ['오전', '오후'], // or false = 24시간제,   meridiem 정오 라는 뜻이라는데
-            hours: 24, //   12,   24
+			ampm: false, // ['오전', '오후'], // or false = 24시간제,   meridiem 정오 라는 뜻이라는데
+			hours: 24, //   12,   24
 			minutes: true, //
 			seconds: false, // 간격 false, true or 1 ,2 ~
 			interval: 1,//분 간격 false, true or 1 ,2 ~
 			maxItem: 3, //화면에 보일 아이템 수, 3, 5 ~ 홀수만
 			control: true,//취소, 선택 버튼
-            time: null // 초기값,   hours가 12면 ampm 값도 넣어야함 'am:11:33',
+			time: null // 초기값,   hours가 12면 ampm 값도 넣어야함 'am:11:33',
 		};
 	}
 
@@ -108,40 +108,40 @@ export class Timepicker {
 	}
 
 	// 포커스 처리
-	handleFocus(e) {   
-        // 이미 열려있는 타임피커가 있는지 확인
-        if (reTime.initInputTimepickerCount > 1) {
-            console.log("222 - ", this.timepickerInput.initBTPicker);
-            // 현재 포커스를 받은 input 요소가 아닌 다른 타임피커가 열려있다면 닫기
-            const restTimepickerInput = [...document.querySelectorAll('.bTimepicker-init')].filter(b => b !== this.timepickerInput);
+	handleFocus(e) {
+		// 이미 열려있는 타임피커가 있는지 확인
+		if (reTime.initInputTimepickerCount > 1) {
+			console.log("222 - ", this.timepickerInput.initBTPicker);
+			// 현재 포커스를 받은 input 요소가 아닌 다른 타임피커가 열려있다면 닫기
+			const restTimepickerInput = [...document.querySelectorAll('.bTimepicker-init')].filter(b => b !== this.timepickerInput);
 
-            restTimepickerInput.forEach(r => r.orderBTID ? this.closeTimepicker(r) : '');
-        }
+			restTimepickerInput.forEach(r => r.orderBTID ? this.closeTimepicker(r) : '');
+		}
 
-        // 새로운 타임피커 생성 및 열기
+		// 새로운 타임피커 생성 및 열기
 		this.createTimepicker(null, Date.now());
 
-		document.addEventListener("mousedown", this.boundHandleClickOutside); 
-        window.addEventListener('resize', this.boundResizeHandler); // 리사이즈 이벤트 리스너 추가
+		document.addEventListener("mousedown", this.boundHandleClickOutside);
+		window.addEventListener('resize', this.boundResizeHandler); // 리사이즈 이벤트 리스너 추가
 	}
 
 	// 외부 클릭 감지
-	handleClickOutside(event) {  
-        const openTimepicker = [...document.querySelectorAll('.bTimepicker-wrap')]; // 현재 열려있는 타임피커
-        const [...initTimepickerInput] = document.querySelectorAll('.bTimepicker-init');
+	handleClickOutside(event) {
+		const openTimepicker = [...document.querySelectorAll('.bTimepicker-wrap')]; // 현재 열려있는 타임피커
+		const [...initTimepickerInput] = document.querySelectorAll('.bTimepicker-init');
 
-		if (openTimepicker 
-            && !openTimepicker.some(p => p.contains(event.target))
+		if (openTimepicker
+			&& !openTimepicker.some(p => p.contains(event.target))
 			&& event.target.closest("input") !== this.timepickerInput) {
-			
-            const relatedInput = initTimepickerInput.find(o => openTimepicker.find(z => z.id === o.orderBTID));
 
-            if (relatedInput) this.closeTimepicker(relatedInput);
+			const relatedInput = initTimepickerInput.find(o => openTimepicker.find(z => z.id === o.orderBTID));
+
+			if (relatedInput) this.closeTimepicker(relatedInput);
 		}
 	}
 
-    handleFocusOut() {
-        setTimeout(() => {
+	handleFocusOut() {
+		setTimeout(() => {
 			if (this.timepickerWrapper && !this.isTimepickerVisible && !this.timepickerWrapper.contains(document.activeElement)) {
 				this.closeTimepicker(this.timepickerInput);
 			}
@@ -149,12 +149,12 @@ export class Timepicker {
 	}
 
 	// Timepicker 닫기
-	closeTimepicker(tInput) {  
+	closeTimepicker(tInput) {
 		if (!document.querySelector("#" + tInput.orderBTID)) return;
-		
+
 		document.body.removeChild(document.querySelector("#" + tInput.orderBTID));
-		
-        console.log("closeTimepicker 11 - ", tInput);
+
+		console.log("closeTimepicker 11 - ", tInput);
 
 		this.timepickerWrapper = null;
 		this.timepickerElements = {};
@@ -162,15 +162,15 @@ export class Timepicker {
 		tInput.initBTPicker = false;
 
 		document.removeEventListener("mousedown", this.boundHandleClickOutside);
-        if (reTime.documentMouseMoveHandler) {
+		if (reTime.documentMouseMoveHandler) {
 			document.removeEventListener('mousemove', reTime.documentMouseMoveHandler);
-            reTime.documentMouseMoveHandler = null;
-        }
-        if (reTime.documentMouseUpHandler) {
+			reTime.documentMouseMoveHandler = null;
+		}
+		if (reTime.documentMouseUpHandler) {
 			document.removeEventListener('mouseup', reTime.documentMouseUpHandler);
 			reTime.documentMouseUpHandler = null;
-        }
-        window.removeEventListener('resize', this.boundResizeHandler);
+		}
+		window.removeEventListener('resize', this.boundResizeHandler);
 	}
 
 	// Timepicker 생성
@@ -198,29 +198,29 @@ export class Timepicker {
 		const midpoint = windowHeight / 2;
 
 		// rect.top은 뷰포트의 상단에서 요소의 상단까지의 거리입니다.
-        return rect.top < midpoint;
+		return rect.top < midpoint;
 	}
 
 	createInitTime() {
 		for (const [key, value] of Object.entries(this.selectedTime)) {
 			const o = this.timepickerElements[key]?.zOptions;
 
-            if (o) {
-                console.log("2 - tTarget children:", [...o.tTarget.children].map(ch => ch.textContent));
-                o.currentIdx = [...o.tTarget.children].findIndex(ch => ch.textContent === value);
-                console.log("3 - currentIdx:", o.currentIdx, o.tTarget.children[2].textContent);
+			if (o) {
+				console.log("2 - tTarget children:", [...o.tTarget.children].map(ch => ch.textContent));
+				o.currentIdx = [...o.tTarget.children].findIndex(ch => ch.textContent === value);
+				console.log("3 - currentIdx:", o.currentIdx, o.tTarget.children[2].textContent);
 
-                const scrollTop = o.itemHeight * (o.currentIdx - o.initIdx);
-                console.log("4 - scrollTop:", scrollTop);
+				const scrollTop = o.itemHeight * (o.currentIdx - o.initIdx);
+				console.log("4 - scrollTop:", scrollTop);
 
-                console.log("5 - element to scroll:", this.timepickerElements[key].body);
-                console.log("6 - scroll to:", scrollTop);
-                this.setScrollTop(this.timepickerElements[key].body, scrollTop);
+				console.log("5 - element to scroll:", this.timepickerElements[key].body);
+				console.log("6 - scroll to:", scrollTop);
+				this.setScrollTop(this.timepickerElements[key].body, scrollTop);
 
-                if (o.currentIdx < 0) this.alertMsg(this.msgList.t1);
-                else if (o.currentIdx === 0) this.setSelectedItem(key, o.tTarget, o.initIdx);
-                else this.setSelectedItem(key, o.tTarget, o.currentIdx);
-            }
+				if (o.currentIdx < 0) this.alertMsg(this.msgList.t1);
+				else if (o.currentIdx === 0) this.setSelectedItem(key, o.tTarget, o.initIdx);
+				else this.setSelectedItem(key, o.tTarget, o.currentIdx);
+			}
 
 			console.log("1 - key:", key, "value:", value, "o:", o, this.timepickerElements[key].body);
 		}
@@ -258,49 +258,49 @@ export class Timepicker {
 		let list = document.createElement("ol");
 		list.setAttribute("class", key);
 
-        const values = [];
-        if (key === "ampm") {
-            values.push(...this.timepickerInput.initBTValues[key]);
-        } else if (key === "hours") {
-            for (let i = 1; i <= this.timepickerInput.initBTValues[key]; i++) {
-                values.push(i);
-            }
-        } else {
-            const interval = this.timepickerInput.initBTValues[key] === true ? this.timepickerInput.initBTValues.interval : '';
-            for (let i = 0; i < 60; i += interval) {
-                values.push(i);
-            }
-        }
+		const values = [];
+		if (key === "ampm") {
+			values.push(...this.timepickerInput.initBTValues[key]);
+		} else if (key === "hours") {
+			for (let i = 1; i <= this.timepickerInput.initBTValues[key]; i++) {
+				values.push(i);
+			}
+		} else {
+			const interval = this.timepickerInput.initBTValues[key] === true ? this.timepickerInput.initBTValues.interval : '';
+			for (let i = 0; i < 60; i += interval) {
+				values.push(i);
+			}
+		}
 
 		values.forEach(val => this.addItems(list, val));
 		this.addBlankItems(list);// 위치를 맞추기 위한 빈태그 삽입
 
 		this.timepickerElements[key].body.appendChild(list);
-        this.timepickerWrapper.appendChild(this.timepickerElements[key].body);
+		this.timepickerWrapper.appendChild(this.timepickerElements[key].body);
 
 		this.timepickerElements[key].zOptions = this.initDefaultOptions(key, this.timepickerElements[key].body);
 
-		
+
 		this.attachEventListener(this.timepickerElements[key], this.timepickerElements[key].body);
-		
+
 	}
 
-    setPositionTimepickerWrapper = (pickerTransition = '') => {
+	setPositionTimepickerWrapper = (pickerTransition = '') => {
 		if (!this.timepickerWrapper) return; // timepickerWrapper가 존재하는지 확인
 
-        this.timepickerWrapper.style.cssText = `
-            position: absolute;
-            top: ${window.scrollY + this.timepickerInput.getBoundingClientRect().top + this.timepickerInput.getBoundingClientRect().height}px;
-            left: ${window.scrollX + this.timepickerInput.getBoundingClientRect().left}px;
-            --maxItem: ${this.timepickerInput.initBTValues.maxItem};
-            ${pickerTransition}
-        `;
+		this.timepickerWrapper.style.cssText = `
+				position: absolute;
+				top: ${window.scrollY + this.timepickerInput.getBoundingClientRect().top + this.timepickerInput.getBoundingClientRect().height}px;
+				left: ${window.scrollX + this.timepickerInput.getBoundingClientRect().left}px;
+				--maxItem: ${this.timepickerInput.initBTValues.maxItem};
+				${pickerTransition}
+			`;
 
-        if (!this.checkElementVerticalPosition(this.timepickerInput)) {
-            this.timepickerWrapper.style.cssText += `
-                transform: translateY( calc(-100% - ${this.timepickerInput.getBoundingClientRect().height}px));
-            `;
-        }
+		if (!this.checkElementVerticalPosition(this.timepickerInput)) {
+			this.timepickerWrapper.style.cssText += `
+					transform: translateY( calc(-100% - ${this.timepickerInput.getBoundingClientRect().height}px));
+				`;
+		}
 	};
 
 	attachEventListener(node, element, scrollStep = 50) {
@@ -324,7 +324,7 @@ export class Timepicker {
 		let isTouchDragging = false;
 		let timer = null;
 
-		const updateSelectedItem = (scrollTop) => {  
+		const updateSelectedItem = (scrollTop) => {
 			const currentIdx = Math.round(scrollTop / scrollStep);
 			node.zOptions.currentIdx = Math.max(0, Math.min(currentIdx, node.zOptions.lastIdx));
 			element.scrollTop = node.zOptions.currentIdx * scrollStep;
@@ -332,25 +332,25 @@ export class Timepicker {
 
 			this.render();
 		};
-		
-		element.addEventListener('mouseleave', (e) => { 
+
+		element.addEventListener('mouseleave', (e) => {
 			if (isMouseDown) isMouseDown = false;
 		});
 
-		element.addEventListener('mousedown', (e) => { 
+		element.addEventListener('mousedown', (e) => {
 			isMouseDown = true;
 			isDragging = false; // mousedown 시 드래그 상태 초기화
 			startY = e.clientY;
 			startScrollTop = element.scrollTop;
 		});
-		
+
 		const mouseupHandler = (e) => {
 			if (e.pointerType === 'touch') return; // 터치 입력 시 무시
-			if (isMouseDown) {  
+			if (isMouseDown) {
 				isMouseDown = false;
 
-				if (!isDragging) { 
-					const clickedItem = e.target.closest(".item");				
+				if (!isDragging) {
+					const clickedItem = e.target.closest(".item");
 					if (clickedItem) {
 						node.zOptions.currentIdx = [...node.zOptions.tTarget.children].findIndex(t => t.textContent === clickedItem.textContent);
 						updateSelectedItem((node.zOptions.currentIdx - node.zOptions.initIdx) * scrollStep);
@@ -361,7 +361,7 @@ export class Timepicker {
 			}
 		};
 
-		const mousemoveHandler = (e) => { 
+		const mousemoveHandler = (e) => {
 			if (!isMouseDown) return;
 			e.preventDefault();
 			const deltaY = e.clientY - startY;
@@ -380,14 +380,14 @@ export class Timepicker {
 					isScrolling = false;
 				});
 			}
-		}; 
+		};
 
-        document.addEventListener('mouseup', mouseupHandler);
+		document.addEventListener('mouseup', mouseupHandler);
 		document.addEventListener('mousemove', mousemoveHandler);
 
 		reTime.documentMouseUpHandler = mouseupHandler;
-        reTime.documentMouseMoveHandler = mousemoveHandler;
-		
+		reTime.documentMouseMoveHandler = mousemoveHandler;
+
 		element.addEventListener('wheel', (e) => {
 			e.preventDefault();
 			const deltaY = e.deltaY;
@@ -405,46 +405,46 @@ export class Timepicker {
 		}, { passive: false });
 
 		// 터치 이벤트 리스너
-		element.addEventListener('touchstart', (e) => { 
+		element.addEventListener('touchstart', (e) => {
 			isTouched = true;
 			isTouchDragging = false;
 			touchStartY = e.touches[0].clientY;
-        });
-	
-		element.addEventListener('touchmove', (e) => {  
+		});
+
+		element.addEventListener('touchmove', (e) => {
 			if (!isTouched) return;
 			const deltaY = e.touches[0].clientY - touchStartY;
 
 			if (!isTouchDragging && Math.abs(deltaY) > 5) { //
 				isTouchDragging = true;
 			}
-        }, { passive: true }); // preventDefault 사용 시 passive: false 필요
+		}, { passive: true }); // preventDefault 사용 시 passive: false 필요
 
-		element.addEventListener('touchend', (e) => { 
-            if (isTouched && !isTouchDragging) {
-				const clickedItem = e.target.closest(".item");	
+		element.addEventListener('touchend', (e) => {
+			if (isTouched && !isTouchDragging) {
+				const clickedItem = e.target.closest(".item");
 				if (clickedItem) {
 					node.zOptions.currentIdx = [...node.zOptions.tTarget.children].findIndex(t => t.textContent === clickedItem.textContent);
 					element.scrollTop = (node.zOptions.currentIdx - node.zOptions.initIdx) * scrollStep;
 				}
 			}
-            isTouched = false;
-            isTouchDragging = false;
-        });
-		
+			isTouched = false;
+			isTouchDragging = false;
+		});
+
 		element.addEventListener('scroll', (e) => {
-            if (!isTouched && !isMouseDown) return; // 터치 또는 마우스 입력이 없을 때는 무시
-	
+			if (!isTouched && !isMouseDown) return; // 터치 또는 마우스 입력이 없을 때는 무시
+
 			clearTimeout(timer);
-            timer = setTimeout(() => {
+			timer = setTimeout(() => {
 				updateSelectedItem(element.scrollTop);
-                isTouched = false;
+				isTouched = false;
 				isTouchDragging = false;
 				isMouseDown = false;
 				isDragging = false;
 			}, 200);
 		});
-	
+
 	}
 
 	//시, 분 추가
@@ -485,7 +485,7 @@ export class Timepicker {
 			initIdx: parseInt(this.timepickerInput.initBTValues.maxItem / 2),
 			currentIdx: parseInt(this.timepickerInput.initBTValues.maxItem / 2),// 현재 아이템
 			lastIdx: o.firstElementChild.children.length - parseInt(this.timepickerInput.initBTValues.maxItem / 2) - 1,// 마지막 아이템
-        };
+		};
 	}
 
 	// O 선택, X 취소 컨트롤 생성
@@ -513,8 +513,8 @@ export class Timepicker {
 	cancelTimepicker = e => {
 		e.stopPropagation();
 
-        const initTime = this.timepickerInput.initBTValues.time?.replace(/\s/g, '');
-        const selectedTime = this.timepickerInput.value?.replace(/\s/g, '');
+		const initTime = this.timepickerInput.initBTValues.time?.replace(/\s/g, '');
+		const selectedTime = this.timepickerInput.value?.replace(/\s/g, '');
 
 		if (initTime && initTime !== selectedTime) {
 			const timeParts = initTime.split(":");
@@ -523,7 +523,7 @@ export class Timepicker {
 					this.selectedTime[key] = timeParts[index];
 				}
 			});
-        } else if (initTime === undefined || initTime === null || initTime === '') {
+		} else if (initTime === undefined || initTime === null || initTime === '') {
 			for (const key in this.selectedTime) {
 				this.selectedTime[key] = '';
 			}
@@ -552,12 +552,12 @@ export class Timepicker {
 
 		this.timepickerInput.initBTValues.time = this.timepickerInput.value || args?.time || "";
 		this.timepickerInput.value = this.formatTime(this.timepickerInput.initBTValues.time);
-		
+
 		if (this.timepickerInput.initBTValues.time) {
 			let timeParts = this.timepickerInput.initBTValues.time.replace(/\s/gi, "").split(':');
 
 			Object.keys(this.selectedTime).forEach((key, idx) => {
-				if (idx < timeParts.length) 
+				if (idx < timeParts.length)
 					this.selectedTime[key] = timeParts[idx];
 			})
 		}
@@ -565,18 +565,18 @@ export class Timepicker {
 		console.log("initTime - ", this.selectedTime);
 	}
 
-    render = () => {
+	render = () => {
 		let a = [];
 		for (const key in this.selectedTime) {
-            if (this.selectedTime[key] !== "") {
-                a.push(this.selectedTime[key])
+			if (this.selectedTime[key] !== "") {
+				a.push(this.selectedTime[key])
 			}
 		}
-        this.timepickerInput.value = a.length > 0 ? a.map(v => v).join(" : ") : '';
+		this.timepickerInput.value = a.length > 0 ? a.map(v => v).join(" : ") : '';
 	}
 
 	alertMsg = (str = null) => {
-        const ALERT_DURATION = 3000; // 메시지 표시 시간 (상수)
+		const ALERT_DURATION = 3000; // 메시지 표시 시간 (상수)
 
 		let msgWrap = document.createElement("div");
 		msgWrap.setAttribute("class", "btpicker-alert-msg");
@@ -585,12 +585,12 @@ export class Timepicker {
 		document.body.appendChild(msgWrap);
 
 		msgWrap.style.cssText = `
-			position: absolute;
-            top : ${window.scrollY + this.timepickerInput.getBoundingClientRect().top}px;
-            left : ${window.scrollX + this.timepickerInput.getBoundingClientRect().left}px;
-		`;
+				position: absolute;
+				top : ${window.scrollY + this.timepickerInput.getBoundingClientRect().top}px;
+				left : ${window.scrollX + this.timepickerInput.getBoundingClientRect().left}px;
+			`;
 
-        setTimeout(() => msgWrap.remove(), ALERT_DURATION); // 설정된 시간 후 메시지 제거
+		setTimeout(() => msgWrap.remove(), ALERT_DURATION); // 설정된 시간 후 메시지 제거
 	}
 
 	static debounce(func, delay = 300) {
@@ -607,19 +607,14 @@ export class Timepicker {
 		if (!obj) return null;
 
 		if (obj instanceof NodeList) {
-            obj.forEach(o => new this(o, args))
+			obj.forEach(o => new this(o, args))
 		} else {
 			return new this(obj, args);
 		}
 
 		return null;
 	}
-	
+
+
 }
-
-
-
-
-
-
 
