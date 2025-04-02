@@ -1,1 +1,109 @@
-a
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<title>타임피커</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+	
+
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="format-detection" content="date=no">
+	<meta name="format-detection" content="address=no">
+	<meta name="format-detection" content="email=no">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+</head>
+
+
+<body>
+
+<!--common main-->
+<main class="common">
+
+
+	<!--common content-->
+	<div id="content" class="content-wrap common">
+
+		<!--페이지 정보-->
+		<div class="page-info">
+			<!--//페이지 제목-->
+			<h2 class="page-title">타임피커</h2>
+			<!--//페이지 제목-->
+		</div>
+		<!--//페이지 정보-->
+
+		<!--CONTENT-->
+
+
+		<!--섹션 폼태그 기본 스타일-->
+		<section class="section">
+
+			<!--섹션용 헤더-->
+			<header class="section-header margin-bottom-3">
+				<div class="title">
+					<h3 class="h3">타임피커 기본 스타일</h3>
+				</div>
+			</header>
+			<!--//섹션용 헤더-->
+
+			<link rel="stylesheet" type="text/css" href="bTimepicker.css">
+			<div  style=" display: flex; gap: 4px; margin-bottom: 2em;">
+				<label><input id="timepicker1" class="ttttTEST" type="text" placeholder="시간선택" value="12:30"></label>-
+			
+				<label><input id="timepicker2" class="ttttTEST2" type="text" placeholder="시간선택" value=""></label>
+			</div>
+
+			<label><input id="timepicker3" class="ttttTEST2" type="text" placeholder="시간선택" value=""></label>
+
+			<script src="bTimepicker.js"></script>
+
+			<script>
+				document.addEventListener('DOMContentLoaded', function() {
+
+
+					const inputElement = document.getElementById('timepicker1');
+
+					//기본 설정 값
+					const defaultOptions = {
+						ampm: false, // ['오전', '오후'] 또는 false = 24시간제
+						hours: 24, //  12, 24
+						minutes: true, //
+						seconds: false, // 간격 false, true or 1 ,2 ~
+						interval: 1,//분 간격 false, true or 1 ,2 ~
+						maxItem: 3, //화면에 보일 아이템 수, 3, 5 ~ 홀수만 가능
+						control: true,// 선택한 시각 취소, 선택 버튼
+						time: null // 초기값,   hours가 12면 ampm 값도 넣어야함 'am:11:33',
+					}
+					const t1 = bTimepicker(inputElement, defaultOptions);
+
+
+					const t2 = bTimepicker( document.getElementById('timepicker2'), {
+						ampm: ['오전', '오후'], 
+						time: '오전:11:13'
+					} );
+
+					const t3 = bTimepicker( document.getElementById('timepicker3'));
+		
+					console.log(t1);
+				});
+			</script>
+
+		</section>
+		<!--//섹션 폼태그 기본 스타일-->	
+
+		
+		<!--//CONTENT-->
+	</div>
+	<!--//common content-->
+
+</main>
+<!--//common main-->
+
+
+<!--목업용_개발시 무시-->
+<!--//목업용_개발시 무시-->
+</body>
+
+</html>
