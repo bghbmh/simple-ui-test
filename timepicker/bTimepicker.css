@@ -26,6 +26,12 @@
 	--btime-border-color: hsl(0 0% 65%);
 	--btime-border-radius : 6px;
 	--btime-placeholder-color : hsl(0 0% 75%);
+	--btime-maxItem : 3;
+
+	--btime-item-height : calc( (1em + 6px) * 2);
+	--btime-item-height-selected : calc( (1em + 6px) * 2); /* 2.5 */
+
+	--btime-ctrl-height : calc( 2.5em + 0px );
 }
 
 input.bTimepicker-init{
@@ -61,10 +67,7 @@ input.bTimepicker-init::placeholder{ color: var(--btime-placeholder-color); }
 
 
 .bTimepicker-wrap {
-	--item-height : calc( (1em + 6px) * 2);
-	--item-height-selected : calc( (1em + 6px) * 2); /* 2.5 */
 
-	--ctrl-height : calc( 2.5em + 0px );
 
 
 	position: relative; 
@@ -81,6 +84,12 @@ input.bTimepicker-init::placeholder{ color: var(--btime-placeholder-color); }
 
 	box-shadow: 0 8px 15px 10px hsl( 0deg 0% 0% / .1);
 	overflow: hidden;
+
+	-webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE 10+ */
+    user-select: none;          /* Standard syntax */
 	
 }
 
@@ -88,7 +97,7 @@ input.bTimepicker-init::placeholder{ color: var(--btime-placeholder-color); }
 	content: '';
 	position: absolute;
 	width: calc(100% - 4px);
-	height: var(--item-height-selected);
+	height: var(--btime-item-height-selected);
 	background-color: hsl(195deg 100% 8% / .06);
 	border-radius: 4px;
 	top: 50%;
@@ -98,14 +107,14 @@ input.bTimepicker-init::placeholder{ color: var(--btime-placeholder-color); }
 	mix-blend-mode: darken;
 }
 .bTimepicker-wrap:has(.ctrl)::before{
-	top: calc(50% - 3px - ( var(--ctrl-height) / 2 ));
+	top: calc(50% - 3px - ( var(--btime-ctrl-height) / 2 ));
 }
 
 .bTimepicker-wrap [class*="-wrap"]{
 	float: left;
 	width: 4em;
 	height: 100%;
-	max-height: calc( var(--item-height)  * var(--maxItem, 5) );
+	max-height: calc( var(--btime-item-height)  * var(--btime-maxItem, 3) );
 	overflow-x: hidden;
 	overflow-y: auto;
 	scroll-behavior: smooth;
@@ -115,24 +124,33 @@ input.bTimepicker-init::placeholder{ color: var(--btime-placeholder-color); }
 
 	-ms-overflow-style: none; /* for Internet Explorer, Edge */
 	scrollbar-width: none; /* for Firefox */
+
+	box-sizing: border-box;
 }
 
 .bTimepicker-wrap [class*="-wrap"]::-webkit-scrollbar{ display: none; }
 
 .bTimepicker-wrap ol { 
-	list-style: none; padding:0; margin: 0; 
-	transition: all .3s  ease-out;/*  */ 
+	list-style: none; 
+	padding:0 !important; 
+	margin: 0 !important; 
+	transition: all .3s  ease-out;
 
+	margin-block-start: 0em;
+	margin-block-end: 0em;
+	padding-inline-start: 0px;
+
+	/*  
 	perspective:200px;
-	perspective-origin:center; 
+	perspective-origin:center; */ 
 }
 
 .bTimepicker-wrap .item{ 
 	display: block;
-	height: var(--item-height);
+	height: var(--btime-item-height);
 	padding: 0;
 	text-align: center;
-	line-height: var(--item-height);
+	line-height: var(--btime-item-height);
 	cursor: pointer;
 	opacity: .6; 
 
@@ -149,8 +167,8 @@ input.bTimepicker-init::placeholder{ color: var(--btime-placeholder-color); }
 .bTimepicker-wrap .selected{ 
 	font-weight: 600; opacity: 1;
 	color: var(--btime-text-color);
-	/* height: var(--item-height-selected);  
-	line-height: var(--item-height-selected); */
+	/* height: var(--btime-item-height-selected);  
+	line-height: var(--btime-item-height-selected); */
 }
 
 
@@ -160,7 +178,7 @@ input.bTimepicker-init::placeholder{ color: var(--btime-placeholder-color); }
 	top: 100%;
 	display:  flex;
 	width: 100%;
-	height: var(--item-height);
+	height: var(--btime-item-height);
 	border-top: 1px solid #f0f0f0;
 	
 	/* box-shadow: 0 8px 15px 0px hsl( 0deg 0% 0% / .1); */
@@ -182,9 +200,9 @@ input.bTimepicker-init::placeholder{ color: var(--btime-placeholder-color); }
 	color: #767676;
 	font-size: calc(1em - 2px);
 	
-	--maskimg : url('../bTimepicker/check.svg');
+	--maskimg : url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 6L9 17L4 12' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 
-  line-height: 1;
+	line-height: 1;
 	
 }
 .bTimepicker-wrap .ctrl > button::before{
@@ -196,7 +214,7 @@ input.bTimepicker-init::placeholder{ color: var(--btime-placeholder-color); }
 	background-color: currentColor;
 
 	
-
+	
 	-webkit-mask-image: var(--maskimg);
 	mask-image: var(--maskimg);
 
@@ -211,7 +229,7 @@ input.bTimepicker-init::placeholder{ color: var(--btime-placeholder-color); }
 
 }
 .bTimepicker-wrap .ctrl .ok{ color: #0a73e2;}
-.bTimepicker-wrap .ctrl .cancel{ --maskimg : url('../bTimepicker/x-close.svg');  }
+.bTimepicker-wrap .ctrl .cancel{ --maskimg : url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18 6L6 18M6 6L18 18' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");  }
 
 .bTimepicker-wrap .ctrl > button:hover{ filter:contrast(95%) }
 /* .testTime .item:has( + .selected){ transform: rotateX(15deg); }
