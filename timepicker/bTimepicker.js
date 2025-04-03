@@ -29,7 +29,6 @@
 		this.boundHandleClickOutside = this.handleClickOutside.bind(this); // 바인딩
         this.boundResizeHandler = Timepicker.debounce(this.setPositionTimepickerWrapper.bind(this)); //  , 'transition: all .3s;'   바인딩
 
-
 		this.timepickerInput = obj;
 		this.timepickerInput.classList.add("bTimepicker-init");
 		this.timepickerInput.initBTPicker = false;
@@ -39,7 +38,6 @@
 		this.timepickerElements = {}; // ampm { body, zOptions }, hours, minutes, seconds
 		this.selectedTime = {};// ampm, hours, minutes, seconds
 
-
 		this.isTimepickerVisible = false;
 		this.isMouse = false;
         this.userOS = this.getUserOS(); // 매직마우스 휠과 일반 마우스 휠이 달라 os를 확인함
@@ -48,7 +46,6 @@
 		this.initTime(args);
 
 		this.setupEventListeners();
-
 		this.render();
 
 		Timepicker.initInputTimepickerCount++; // 타임피커를 사용하는 요소 개수
@@ -78,8 +75,8 @@
             ampm: false, // ['오전', '오후'], // or false = 24시간제,   meridiem 정오 라는 뜻이라는데
             hours: 24, //   12,   24
 			minutes: true, //
-			seconds: false, // 간격 false, true or 1 ,2 ~
 			interval: 1,//분 간격 false, true or 1 ,2 ~
+			seconds: false, // 간격 false, true or 1 ,2 ~
 			maxItem: 3, //화면에 보일 아이템 수, 3, 5 ~ 홀수만 가능
 			control: true,//취소, 선택 버튼
             time: null // 초기값,   hours가 12면 ampm 값도 넣어야함 'am:11:33',
@@ -95,7 +92,6 @@
 			}
 			this.timepickerInput.initBTValues[key] = args[key];
 		}
-
 		document.body.style.setProperty('--btime-maxItem', this.timepickerInput.initBTValues.maxItem);
 	}
 
@@ -108,7 +104,6 @@
 	setupEventListeners() {
 		this.timepickerInput.addEventListener("focus", this.inputHandler.bind(this));
 	}
-
 
 	// 포커스 이벤트 처리
 	inputHandler(e) {
@@ -285,10 +280,7 @@
         this.timepickerWrapper.appendChild(this.timepickerElements[key].body);
 
 		this.timepickerElements[key].zOptions = this.initDefaultOptions(key, this.timepickerElements[key].body);
-
-		
 		this.attachEventListener(this.timepickerElements[key], this.timepickerElements[key].body);
-		
 	}
 
     setPositionTimepickerWrapper = (pickerTransition = '') => {
@@ -308,7 +300,6 @@
             `;
         }
 	};
-
 
 	mouseupHandler = (e) => { 
 		if (this.isTouched) return; // 터치 입력 시 무시
@@ -494,7 +485,6 @@
 		li.textContent = typeof num === "string" ? num : num.toString().padStart(2, '0');
 
 		//console.log("addItems - ", obj, num, li.textContent, Number(li.textContent))
-
 		obj.appendChild(li);
 	};
 
@@ -602,7 +592,6 @@
 					this.selectedTime[key] = timeParts[idx].toString().padStart(2, '0');
 			})
 		}
-
 		console.log("initTime - ", this.selectedTime);
 	}
 
