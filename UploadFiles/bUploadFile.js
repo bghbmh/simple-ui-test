@@ -206,7 +206,7 @@
 
 	// 하나씩 삭제
 	deleteFile(fileToDelete, itemToRemove) {
-		console.log("파일 삭제 로직 실행:", fileToDelete, itemToRemove  );
+		//console.log("deleteFile - ", fileToDelete, itemToRemove  );
 
 		// URL 해지 
 		const objectURL = this.objectURLs.get(fileToDelete);
