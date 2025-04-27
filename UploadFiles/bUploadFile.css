@@ -1,0 +1,586 @@
+@charset "UTF-8";
+.upload-type1,
+.upload-type2,
+.upload-type3 {
+
+	--upload-gutter : 6px;
+
+	--upload-border-radius : 8px;
+	--upload-border-color: hsl(140, 7%, 82%);
+
+	--upload-alert-msg-bg-color : #f8e1e1;
+
+	--upload-btn-bg-color : #00AFA7;
+	--upload-btn-font-color: #fff;
+
+	--upload-filebox-bg-color: hsl(0 0% 97%);
+
+}
+
+.upload-type1 button,
+.upload-type2 button,
+.upload-type3 button {
+	text-transform: none;
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	border: 0;
+	padding: 0;
+	line-height: 1;
+	cursor: pointer;
+	background-color: transparent;
+}
+
+/* 메시지 */
+.upload-alert-msg{
+	position: absolute;
+	display: inline-flex;
+	gap: 6px;
+	width: calc(100% - 8px);
+	left : 4px;
+	bottom: 2em;
+	padding: 1.2em 1.8em 1em 1em;
+	box-sizing: border-box;
+	border-radius: 4px;
+	font-size: 13px;
+	word-break: keep-all;
+	background-color: var(--upload-alert-msg-bg-color);
+	box-shadow: 0 4px 10px hsl( 0 0% 0% / .2);
+	
+	--maskimg : url("data:image/svg+xml,%3Csvg width='20' height='21' viewBox='0 0 20 21' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M9.21727 3.75884C9.45292 3.61479 9.72375 3.53857 9.99994 3.53857C10.2761 3.53857 10.547 3.61479 10.7826 3.75884C11.0183 3.90289 11.2096 4.10917 11.3355 4.35498L11.3377 4.35935L16.8393 15.3626C16.9542 15.5908 17.0093 15.8455 16.9986 16.1008C16.9879 16.3564 16.912 16.605 16.7782 16.823C16.6443 17.041 16.457 17.2211 16.234 17.3464C16.011 17.4716 15.7596 17.5378 15.5037 17.5386H15.5022H4.49761H4.49609C4.24029 17.5378 3.98893 17.4716 3.76588 17.3464C3.54284 17.2211 3.35551 17.041 3.2217 16.823C3.08788 16.605 3.01202 16.3564 3.00132 16.1008C2.99062 15.8455 3.04529 15.5916 3.16013 15.3634L8.66216 4.35936L8.66435 4.35497C8.79027 4.10916 8.98163 3.90289 9.21727 3.75884ZM9.99991 7.65947C10.4143 7.65947 10.7502 7.9954 10.7502 8.40979V11.6612C10.7502 12.0756 10.4143 12.4115 9.99991 12.4115C9.58553 12.4115 9.24959 12.0756 9.24959 11.6612V8.40979C9.24959 7.9954 9.58553 7.65947 9.99991 7.65947ZM11.0003 14.4123C11.0003 14.9649 10.5524 15.4128 9.99991 15.4128C9.4474 15.4128 8.99949 14.9649 8.99949 14.4123C8.99949 13.8598 9.4474 13.4119 9.99991 13.4119C10.5524 13.4119 11.0003 13.8598 11.0003 14.4123Z' fill='%236B786F'/%3E%3C/svg%3E");
+
+	color: #520808;
+
+	z-index: 5;
+}
+.upload-alert-msg:before{
+	content: '';
+	flex:none;
+	display: inline-block;
+	width: 1.5em;
+	height: 1.5em;
+	margin-top: -.2em;
+	
+	
+	background-color: currentColor;
+	-webkit-mask-size: contain;
+	-webkit-mask-position-x: 50%;
+	-webkit-mask-position-y: calc(50% - 0px);
+	-webkit-mask-repeat: no-repeat;
+	mask-size: contain;
+	mask-position-x: 50%;
+	mask-position-y: 50%;
+	mask-repeat: no-repeat;
+
+	-webkit-mask-image: var(--maskimg);
+	mask-image: var(--maskimg);
+}
+.upload-alert-msg .upload-msg-close-btn{
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	width: 1.5em;
+	height: 1.5em;
+	line-height: 1;
+	background-color: hsl( 0 0% 18%);
+	border-radius: 100em;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%23e8eaed' aria-hidden='true'%3E%3Cpath d='m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z'/%3E%3C/svg%3E");
+	background-position: center;
+	background-size: 1.2em;
+
+}
+
+
+
+.upload-type1{
+	position: relative;
+
+	width: 100%;
+	max-width: 600px;
+	/* background-color: hsl(0 0% 92%); */
+	--ut-btn-min-height : 10em;
+}
+
+.upload-type1 .upload-file-btn{
+	display: block;
+	width: 100%;
+	height: var(--ut-btn-min-height);
+	background-color: var(--upload-filebox-bg-color);
+	padding:1.5em 1em 1em;
+	border: 1px dashed #C6C6C6;
+	border-radius: var(--upload-border-radius);
+	margin: 0;
+	
+	margin-bottom: 2.5em;
+}
+.upload-type1 .upload-file-btn .area{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1em;
+	height: 100%;
+}
+.upload-type1 .upload-file-btn .area .btn{
+	display: inline-block;
+	padding: 1em 1.3em;
+	background-color: var(--upload-btn-bg-color);
+	color: #fff;
+	border-radius: var(--upload-border-radius);
+}
+
+.upload-type1 .delete-all, .upload-type1 .file-count{
+	position: absolute;
+	top: calc( var(--ut-btn-min-height) + 1.5em )
+}
+.upload-type1 .delete-all{
+	right: 0;
+	display: inline-flex;
+	gap: 4px;
+	font-size: 13px;
+	padding: 2px 4px;
+	background-color: transparent;
+}
+.upload-type1 .file-count{
+	left: 0;
+	display: inline-block;
+	text-align: right;
+	font-size: 13px;
+	padding: 2px 4px;
+	color: #555;
+}
+
+.upload-type1 .guide-count{ font-weight: bold;
+	min-width: 1em;
+	display: inline-block;
+	text-align: center;
+	color: #111;
+ }
+.upload-type1 .guide-text{ padding-right: 3px  }
+.upload-type1 .guide-count + .guide-text:before{
+	content: '/';
+	display: inline-block;
+	padding: 0 3px;
+}
+.upload-type1 .delete-all:before{
+	content: '';
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%23e8eaed' aria-hidden='true'%3E%3Cpath d='m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z'/%3E%3C/svg%3E");
+	background-position: center;
+	filter: brightness(0) ;
+	transform: scale(0.7);
+	
+}
+
+.upload-type1:has(.delete-all.off) .upload-file-btn{ margin-bottom: 0em; }
+.upload-type1 .delete-all.off{ display: none }
+.upload-type1:has(.delete-all.off) .file-count{ display: none }
+
+.upload-type1 .upload-file-box{
+	z-index: 1;
+	flex:1;
+	list-style: none;
+	display: block;
+	
+	margin:0;
+
+	/* flex-basis: 100%;
+	order: 99; */
+}
+.upload-type1 .upload-file-box:has(.item){ padding: 4px 0; }
+.upload-type1 .upload-file-box .item{ 
+	position: relative;
+	display: flex; 
+	gap: 8px;
+	padding:calc(1em - 3px) 1em;
+	margin:0;
+	border: 1px solid #d8d8d8;
+	border-radius: var(--upload-border-radius);
+	font-size: 1em;
+}
+.upload-type1 .upload-file-box .item + .item{ margin-top: var(--upload-gutter); }
+.upload-type1 .upload-file-box .item img{
+	display: none;
+	display: block;  /*  */
+	line-height: 0;
+	width: 3em;
+	height: 3em;
+	object-fit: contain;
+	background-color: hsl(0 0% 97%);
+	border-radius: var(--upload-border-radius);
+}
+.upload-type1 .upload-file-box .item figcaption{  flex: 1; display: block; }
+.upload-type1 .upload-file-box .item figcaption > *{  line-height: 1.6;  }
+/* .upload-type1 .upload-file-box .item figcaption .title{
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;text-overflow: ellipsis;
+} */
+
+.upload-type1 .upload-file-box .ctrl {
+	flex: none;
+	align-self: center;
+	min-width: 4em;
+	text-align: right;
+}
+
+.upload-type1 .upload-file-box .item .ctrl .delete-one{
+	display: inline-flex;
+	gap: 4px;
+	width: auto;
+	height: auto;
+	line-height: 1;
+	padding: 4px;
+	font-size: calc(1em - 1px);
+}
+.upload-type1 .upload-file-box .item .ctrl .delete-one:after{
+	content: attr(aria-label);
+}
+.upload-type1 .upload-file-box .item .ctrl .delete-one:before{
+	content: '';
+	display: block;
+	width: 1em;
+	height: 1em;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%23e8eaed' aria-hidden='true'%3E%3Cpath d='m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z'/%3E%3C/svg%3E");
+	background-position: center;
+	background-size: contain;
+	filter: brightness(0);
+}
+.upload-type1 .upload-alert-msg { bottom: 0; transform: translateY(100%); }
+
+
+
+/* upload-type2 */
+.upload-type2{
+	--upload-btn-bg-color : hsl(0 0% 97%);
+	--upload-btn-font-color : #222;
+
+	position: relative;
+	display: block;
+	width: 100%;
+	max-width: 280px;
+	height: 160px;
+}
+.upload-type2 .upload-file-btn{
+	display: none; /* flex */
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 4px;
+	font-size: 1em;
+	width: 100%;
+	height: 100%;
+	color: var(--upload-btn-font-color);
+	border-radius: var(--upload-border-radius);
+	border: 1px dashed var(--upload-border-color);
+	background-color: var(--upload-btn-bg-color);
+	--upload-maskimg : url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 16.2422C2.79401 15.435 2 14.0602 2 12.5C2 10.1564 3.79151 8.23129 6.07974 8.01937C6.54781 5.17213 9.02024 3 12 3C14.9798 3 17.4522 5.17213 17.9203 8.01937C20.2085 8.23129 22 10.1564 22 12.5C22 14.0602 21.206 15.435 20 16.2422M8 16L12 12M12 12L16 16M12 12V21' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.upload-type2 .upload-file-btn:before{
+	content: '';
+	display: block;
+	width: 1.5em;
+	height: 1.5em;
+	background-color: currentColor;
+	-webkit-mask-size: contain;
+	-webkit-mask-position-x: 50%;
+	-webkit-mask-position-y: calc(50% - 0px);
+	-webkit-mask-repeat: no-repeat;
+	mask-size: contain;
+	mask-position-x: 50%;
+	mask-position-y: 50%;
+	mask-repeat: no-repeat;
+
+	-webkit-mask-image: var(--upload-maskimg);
+	mask-image: var(--upload-maskimg);
+}
+
+.upload-type2 .upload-file-box{
+	display: block; /* none */
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	border-radius: var(--upload-border-radius);
+	border : 1px solid var(--upload-border-color);
+	background-color: var(--upload-filebox-bg-color);
+}
+.upload-type2 .item{
+	
+	display: block;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	border-radius: var(--upload-border-radius);
+	
+	line-height: 0;
+	
+}
+.upload-type2 .upload-file-box img{
+	display: block;
+	width: 100%; 
+	height: 100%; 
+	object-fit: contain;
+	object-position: center;
+}
+.upload-type2 figcaption{
+	position: absolute;
+	display: none; 
+	bottom: 4px;
+	left: 4px;
+}
+
+.upload-type2 .upload-file-box .item .ctrl{
+	position: absolute;
+	right: 4px;
+	top: 4px;
+}
+.upload-type2 .upload-file-box .item .ctrl .delete-one{
+	width: 2em;
+	height: 2em;
+	line-height: 1;
+	background-color: hsl( 0 0% 18%);
+	border-radius: 100em;
+}
+.upload-type2 .upload-file-box .item .ctrl .delete-one:before{
+	content: '';
+	display: block;
+	width: 100%;
+	height: 100%;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%23e8eaed' aria-hidden='true'%3E%3Cpath d='m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z'/%3E%3C/svg%3E");
+	background-position: center;
+	background-size: 1.5em;
+	background-repeat: no-repeat;
+}
+.upload-type2 .upload-file-box:not(:has(  .item)){ display: none; }
+.upload-type2:not(:has(.upload-file-box .item)) .upload-file-btn{ display: flex; }
+
+
+
+
+/* upload-type3 */
+.upload-type3 {
+	
+	
+	--row-cnt-num : 2;  /* 기본 2줄 */
+	--column-cnt-num : 3; /* 한 줄에 파일 3개씩 */ 
+	
+	--t3-width : 240px;
+	--u-w : calc( ( 100% - ( var(--upload-gutter) * ( var(--column-cnt-num) - 1 ) ) ) / var(--column-cnt-num) ) ; /*  80px */
+	--u-h : 80px;
+	
+	--ut-file-btn-width : calc( var(--u-w) + (var(--upload-gutter) / 2) );
+	--ut-file-btn-height : calc( var(--u-h) + var(--upload-gutter) );
+
+	--ut-bg-option-color : #fff;
+
+	position: relative;
+	display: inline-block;
+	width: 280px ;/* 가로길이는 3개 열 */
+	
+	border-radius: var(--upload-border-radius);
+	
+	z-index: 0;
+}
+.upload-type3 .delete-all{
+	position: absolute;
+	display: inline-flex;
+  gap: 4px;
+	bottom: calc(100% + 4px);
+	right: 6px;
+	padding: 2px 4px;
+	background-color: transparent;
+}
+.upload-type3 .delete-all.off{ display: none }
+.upload-type3 .file-count{
+	text-align: right;
+	font-size: 13px;
+	padding: 2px 4px;
+	color: #555;
+}
+.upload-type3 .guide-count{ font-weight: bold;
+	min-width: 1em;
+	display: inline-block;
+	text-align: center;
+	color: #111;
+ }
+.upload-type3 .guide-text{  padding-right: 3px  }
+.upload-type3 .guide-count + .guide-text:before{
+	content: '/';
+	display: inline-block;
+	padding :0 3px;
+}
+.upload-type3 .delete-all:before{
+	content: '';
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%23e8eaed' aria-hidden='true'%3E%3Cpath d='m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z'/%3E%3C/svg%3E");
+	background-position: center;
+	filter: brightness(0) ;
+	transform: scale(0.7);
+	
+}
+.upload-type3 .upload-file-btn{
+	position: absolute;
+	flex: none;
+	
+	left: 0px;
+	z-index: unset;
+	
+	width: var(--ut-file-btn-width) ;
+	height: var(--ut-file-btn-height) ;
+	border-radius: var(--upload-border-radius);
+	border-top-right-radius: 0;
+	border-bottom-left-radius: 0;
+
+	padding: 6px;
+
+	font-size: 1em;
+	top: 0px;
+	left: 0;
+	z-index: 3;
+	line-height: 1;
+	background-color: var(--ut-bg-option-color);
+}
+.upload-type3 .upload-file-btn:before{
+	content: '';
+	position: absolute;
+	display: block;
+	width: 8px;
+	height: 8px;
+	background-color: var(--upload-filebox-bg-color);
+	left: 100%;
+	top: 0;
+	border-top-left-radius: var(--upload-border-radius);
+}
+.upload-type3 .upload-file-btn:after{
+	content: '';
+	position: absolute;
+	display: block;
+	width: 8px;
+	height: 8px;
+	background-color: var(--upload-filebox-bg-color);
+	left: 0;
+	top: 100%;
+	border-top-left-radius: var(--upload-border-radius);
+	z-index: 0;
+}
+
+.upload-type3 .upload-file-btn .area{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 2px;
+	width: 100%;
+	height: 100%;
+	font-size: 12px;
+	background-color: var(--upload-btn-bg-color);
+	color: var(--upload-btn-font-color);
+	border-radius: var(--upload-border-radius);
+
+	--upload-maskimg : url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 16.2422C2.79401 15.435 2 14.0602 2 12.5C2 10.1564 3.79151 8.23129 6.07974 8.01937C6.54781 5.17213 9.02024 3 12 3C14.9798 3 17.4522 5.17213 17.9203 8.01937C20.2085 8.23129 22 10.1564 22 12.5C22 14.0602 21.206 15.435 20 16.2422M8 16L12 12M12 12L16 16M12 12V21' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.upload-type3 .upload-file-btn .area:before{
+	content: '';
+	display: block;
+	width: 2em;
+	height: 2em;
+	background-color: currentColor;
+	-webkit-mask-size: contain;
+	-webkit-mask-position-x: 50%;
+	-webkit-mask-position-y: calc(50% - 0px);
+	-webkit-mask-repeat: no-repeat;
+	mask-size: contain;
+	mask-position-x: 50%;
+	mask-position-y: 50%;
+	mask-repeat: no-repeat;
+
+	-webkit-mask-image: var(--upload-maskimg);
+	mask-image: var(--upload-maskimg);
+}
+.upload-type3 .upload-file-btn:hover .area{ filter: contrast(110%); }
+.upload-type3 .upload-file-box{
+	position: relative;
+	display: grid;
+	grid-template-columns: repeat( var(--column-cnt-num ), 1fr);
+	grid-template-rows: repeat( var(--row-cnt-num ) ,  var(--u-h));
+	gap: 6px;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	
+	padding: 6px;
+	border-radius: var(--upload-border-radius);
+	z-index: 0;
+	background-color: var(--upload-filebox-bg-color);
+}
+.upload-type3 .upload-file-box:before{
+	content: '';
+	position: absolute;
+	display: block;
+	width: 8px;
+	height: 8px;
+	background-color: var(--ut-bg-option-color);
+	left: var(--ut-file-btn-width) ;
+	top:0;
+z-index: 33;
+}
+.upload-type3 .upload-file-box:after{
+	content: '';
+	position: absolute;
+	display: block;
+	width: 8px;
+	height: 8px;
+	background-color: var(--ut-bg-option-color);
+	left: 0;
+	top: var(--ut-file-btn-height) ;
+	z-index: 4;
+}
+
+.upload-type3 .upload-file-box .item {
+	position: relative;
+	grid-column: span 1;
+	grid-row: span 1;
+	max-height: var(--u-h);
+	background-color: var(--gray-e);
+	margin: 0;
+	border-radius: var(--upload-border-radius);
+	line-height: 0;
+	overflow: hidden;
+	background-color: #fff;
+}
+.upload-type3 .upload-file-box .item:first-of-type{	grid-column: 2 / 3; }
+.upload-type3 .upload-file-box .item figcaption{ display: none }
+.upload-type3 .upload-file-box .item .ctrl{
+	position: absolute;
+	top: 4px;
+	right: 4px;
+}
+.upload-type3 .upload-file-box .item img{ 
+	object-fit: cover;
+	object-position: center;
+	width: 100%;
+	height: 100%;
+}
+.upload-type3 .upload-file-box .item .ctrl .delete-one{
+	width: 2em;
+	height: 2em;
+	line-height: 1;
+	background-color: hsl( 0 0% 18%);
+	border-radius: 100em;
+}
+.upload-type3 .upload-file-box .item .ctrl .delete-one:before{
+	content: '';
+	display: block;
+	width: 100%;
+	height: 100%;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='%23e8eaed' aria-hidden='true'%3E%3Cpath d='m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z'/%3E%3C/svg%3E");
+	background-position: center;
+	background-size: 1.5em;
+	background-repeat: no-repeat;
+}
+
+
