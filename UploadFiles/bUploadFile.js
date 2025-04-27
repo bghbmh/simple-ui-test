@@ -2,9 +2,7 @@
     constructor(args) {
         this.handler = this.initializeDefaults(args);
 
-        // 선택된 파일을 저장하기 위해 클래스 속성을 사용합니다.
         this.selectedFiles = [];
-        // 파일 객체를 키로 사용하여 객체 URL을 저장하기 위한 맵을 사용합니다.
         this.objectURLs = new Map();
 
 		this.deleteAllButton = null; // 전체삭제버튼
@@ -51,8 +49,8 @@
                 else console.log('선택된 파일이 없습니다.');
                 
                 newFile.remove();
-            }, { once: true }); 
-		
+            }, { once: true });  
+
             newFile.click();
         });
 
@@ -70,7 +68,7 @@
 			this.handler.fileBox.classList.remove('drag-over'); // 드래그 오버 상태 제거
 		});
 
-		// dragend 이벤트: 드래그 작업이 끝났을 때 (성공이든 취소든) 발생 
+			// dragend 이벤트: 드래그 작업이 끝났을 때 (성공이든 취소든) 발생 
 		this.handler.fileBox.parentNode.addEventListener('dragend', (e) => {
 			e.preventDefault();
 			e.stopPropagation();
@@ -97,7 +95,6 @@
 	processFiles(files) {
         //console.log('Processing files:', files);
 
-        // 최대 파일 개수 초과 체크
         if (this.handler.maxFiles > 0 && this.selectedFiles.length + files.length > this.handler.maxFiles) {
              this.onMssage(`허용 파일 개수를 초과했습니다. 
 				업로드 가능한 전체 파일 수는 ${this.handler.maxFiles}개 입니다. 
@@ -106,8 +103,9 @@
 
 
         for (let i = 0; i < files.length; i++) {
-        	if (this.handler.maxFiles > 0 && this.selectedFiles.length >= this.handler.maxFiles)  break; 
-		
+
+             if (this.handler.maxFiles > 0 && this.selectedFiles.length >= this.handler.maxFiles)  break;
+
             const file = files[i];
             this.selectedFiles.push(file);
 
@@ -115,6 +113,7 @@
             item.setAttribute("class", "item");
             item.dataset.fileName = file.name;
 
+            // url 만듦
             const objectURL = window.URL.createObjectURL(file);
             this.objectURLs.set(file, objectURL); 
 
@@ -142,7 +141,7 @@
 
     }
 
-    // 현재 선택된 파일을 가져오는 메서드
+    // 현재 선택된 파일 확인
     getSelectedFiles() {
         return this.selectedFiles;
     }
@@ -155,10 +154,11 @@
 			"aria-label" : "전체삭제",
 			"textContent" : "전체삭제"
 		});
-		this.deleteAllButton.addEventListener("click", this.deleteAllFiles );
+		this.deleteAllButton.addEventListener("click", () =>  this.deleteAllFiles() );
 		this.handler.loadBtn.parentNode.appendChild(this.deleteAllButton);
 	}
-	//파일 전부 삭제
+
+	//한번에 삭제
     deleteAllFiles() {
         this.objectURLs.forEach(url => window.URL.revokeObjectURL(url));
         this.objectURLs.clear(); // Map 비우기
@@ -208,7 +208,7 @@
 	deleteFile(fileToDelete, itemToRemove) {
 		console.log("파일 삭제 로직 실행:", fileToDelete, itemToRemove  );
 
-		// 객체 URL 해지 (저장된 URL이 있는 경우)
+		// URL 해지 
 		const objectURL = this.objectURLs.get(fileToDelete);
 		if (objectURL) {
 			window.URL.revokeObjectURL(objectURL);
@@ -248,7 +248,7 @@
 
 	onMssage(msg){
 		console.log(msg);
-		const ALERT_DURATION = 3000; // 상수로 쓸때 대문자로 많이 쓴다고 함
+		const ALERT_DURATION = 3000; 
 
 		let msgWrap = this.CreateElement({ tag : "div", "class": "upload-alert-msg" });
 		msgWrap.textContent = msg ? msg : "alert msg";
