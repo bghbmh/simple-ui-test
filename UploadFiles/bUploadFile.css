@@ -203,7 +203,7 @@
 .upload-type1 .upload-file-box .item + .item{ margin-top: var(--upload-gutter); }
 .upload-type1 .upload-file-box .item img{
 	display: none;
-	display: block;  /*  */
+	/* display: block;   */
 	line-height: 0;
 	width: 3em;
 	height: 3em;
