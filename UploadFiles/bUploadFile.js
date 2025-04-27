@@ -18,7 +18,7 @@
         return {
             loadBtn: args.loadBtn ? args.loadBtn : null,
             fileBox: args.fileBox ? args.fileBox : null,
-            multiple: args.multiple !== undefined ? args.multiple : true, // multiple 값 재정의 허용
+            multiple: args.multiple !== undefined ? args.multiple : true, 
 			maxFiles : args.maxFiles ? args.maxFiles : 0,
             onPreviewMarkUp: args.onPreviewMarkUp ? args.onPreviewMarkUp : null,
         };
@@ -51,9 +51,8 @@
                 else console.log('선택된 파일이 없습니다.');
                 
                 newFile.remove();
-            }, { once: true }); // 입력 요소의 change 리스너에 once: true를 사용합니다.
-
-            // 파일 선택 대화상자를 트리거합니다.
+            }, { once: true }); 
+		
             newFile.click();
         });
 
@@ -71,7 +70,7 @@
 			this.handler.fileBox.classList.remove('drag-over'); // 드래그 오버 상태 제거
 		});
 
-			// dragend 이벤트: 드래그 작업이 끝났을 때 (성공이든 취소든) 발생 - 불필요할 수 있지만, dragleave 누락 시 정리 용도로 사용 가능
+		// dragend 이벤트: 드래그 작업이 끝났을 때 (성공이든 취소든) 발생 
 		this.handler.fileBox.parentNode.addEventListener('dragend', (e) => {
 			e.preventDefault();
 			e.stopPropagation();
@@ -103,32 +102,21 @@
              this.onMssage(`허용 파일 개수를 초과했습니다. 
 				업로드 가능한 전체 파일 수는 ${this.handler.maxFiles}개 입니다. 
 				현재 ${this.selectedFiles.length + files.length}개 선택됨.`);
-             // 너무 많은 파일을 드롭했을 경우, 처리를 중단하거나 일부만 추가할 수 있습니다.
-             // 여기서는 메시지만 띄우고, 아래 루프에서 maxFiles 제한을 따릅니다.
         }
 
 
         for (let i = 0; i < files.length; i++) {
-             // 현재 선택된 파일 + 새로 추가될 파일의 총 개수가 maxFiles를 초과하는 경우 추가 중단
-             if (this.handler.maxFiles > 0 && this.selectedFiles.length >= this.handler.maxFiles) {
-				console.log("Max files reached, stopping processing.");
-				// 추가 메시지를 띄울 수도 있습니다.
-				// this.onMssage(`최대 파일 개수(${this.handler.maxFiles}개)에 도달하여 추가 파일을 처리하지 못했습니다.`);
-				break; // 루프 중단
-             }
-
+        	if (this.handler.maxFiles > 0 && this.selectedFiles.length >= this.handler.maxFiles)  break; 
+		
             const file = files[i];
-
-            // 파일을 클래스의 선택된 파일 배열에 추가합니다.
             this.selectedFiles.push(file);
 
             let item = document.createElement("figure");
             item.setAttribute("class", "item");
             item.dataset.fileName = file.name;
 
-            // 객체 URL을 생성하고 저장합니다.
             const objectURL = window.URL.createObjectURL(file);
-            this.objectURLs.set(file, objectURL); // 파일 객체를 키로 URL을 저장합니다.
+            this.objectURLs.set(file, objectURL); 
 
             // 미리보기 함수 실행
             if (typeof this.handler.onPreviewMarkUp === "function") {
@@ -167,10 +155,10 @@
 			"aria-label" : "전체삭제",
 			"textContent" : "전체삭제"
 		});
-		this.deleteAllButton.addEventListener("click", () =>  this.deleteAllFiles() );
+		this.deleteAllButton.addEventListener("click", this.deleteAllFiles );
 		this.handler.loadBtn.parentNode.appendChild(this.deleteAllButton);
 	}
-
+	//파일 전부 삭제
     deleteAllFiles() {
         this.objectURLs.forEach(url => window.URL.revokeObjectURL(url));
         this.objectURLs.clear(); // Map 비우기
@@ -216,7 +204,7 @@
 		}
 	}
 
-	// 파일 하나를 삭제하는 내부 로직 메서드
+	// 하나씩 삭제
 	deleteFile(fileToDelete, itemToRemove) {
 		console.log("파일 삭제 로직 실행:", fileToDelete, itemToRemove  );
 
@@ -280,7 +268,6 @@
 
 }
 
-// 전역 init 함수를 사용하려는 경우, 먼저 window.bUploadFiles를 정의합니다.
 window.bUploadFiles = window.bUploadFiles || {};
 window.bUploadFiles.init = function(args) {
     return new UploadFiles(args);
