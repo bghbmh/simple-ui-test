@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<title>파일업로드</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+	
+
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="format-detection" content="date=no">
+	<meta name="format-detection" content="address=no">
+	<meta name="format-detection" content="email=no">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+</head>
+
+
+<body>
+
+<!--common main-->
+<main class="common">
+
+
+	<!--common content-->
+	<div id="content" class="content-wrap common">
+
+		<!--페이지 정보-->
+		<div class="page-info">
+			<!--//페이지 제목-->
+			<h2 class="page-title">파일업로드</h2>
+			<!--//페이지 제목-->
+		</div>
+		<!--//페이지 정보-->
+
+		<!--CONTENT-->
+
+
+		<!--섹션 폼태그 기본 스타일-->
+		<section class="section">
+
+			<!--섹션용 헤더-->
+			<header class="section-header margin-bottom-3">
+				<div class="title">
+					<h3 class="h3">파일 업로드 스타일</h3>
+				</div>
+			</header>
+			<!--//섹션용 헤더-->
+			
+			<link rel="stylesheet" type="text/css" href="https://bghbmh.github.io/simple-ui-test/UploadFiles/bUploadFile.css">
+
+			<br><br>
+			upload type1__ <br><br>
+			<!--upload type1-->
+			<div class=" upload-type1 example11">
+				<button type="button" class="upload-file-btn " title="파일 추가하기" aria-label="파일 추가하기">
+					<span class="area">
+						첨부할 파일을 여기에 끌어다 놓거나, 파일 선택 버튼을 직접 선택해주세요.
+						<span class="btn primary">파일 선택</span>
+					</span>
+				</button>
+				<div class="upload-file-box " >
+		
+					<!--item_기본 스타일
+					<figure class="item">
+						<img src="/sample/dashboard02/assets/img/common/test-sample22.png" alt="이미지">
+						<figcaption>
+							<span class="option title">첨부할 파일을 여기에 끌어다 놓거나, 파일 선택 버튼을 직접 선택해주세요. 한글파일_filename.png</span>
+							<span class="option">1234kb</span>
+						</figcaption>
+						<div class="ctrl"><button type="button" class="btn delete-one" aria-label="삭제"></button></div>
+					</figure>-->
+					<!--//item_기본 스타일-->
+		
+				</div>
+			</div>
+			<!--//upload type1-->
+
+
+
+			<br><br><br>
+			upload type2_  <br><br>
+			<!-- upload type2 -->
+			<div class="upload-type2 example22"> 
+				<button type="button" class="upload-file-btn " title="이미지 추가하기" aria-label="이미지 추가하기">
+					<span class="area" aria-hidden="true">파일 선택</span>
+				</button>
+				<div class="upload-file-box">
+					<!--item_기본 스타일
+					<figure class="item">
+						<img src="/sample/dashboard02/assets/img/common/test-sample22.png" alt="이미지">
+						<figcaption>
+							<span class="option title">filename.png</span>
+							<span class="option">1234kb</span>
+							<div class="ctrl">
+								<button type="button" class="btn delete-one" aria-label="삭제"></button>
+								<button type="button" data-action="delete" class="btn" aria-label="다른 이미지로 변경하기">변경</button>
+							</div>	
+						</figcaption>
+					</figure>-->
+					<!--//item_기본 스타일-->
+				</div>
+			</div>
+			<!--//upload type2 -->
+
+
+			<br><br><br>
+			upload type3__  <br><br>
+			<!--upload type3-->
+			<div class=" upload-type3 example33">
+				<button type="button" class="upload-file-btn " title="이미지 추가하기" aria-label="이미지 추가하기">
+					<span class="area" aria-hidden="true">파일 선택</span>
+				</button>
+				<div class="upload-file-box " >
+		
+					<!--item_기본 스타일
+					<figure class="item">
+						<img src="/sample/dashboard02/assets/img/common/test-sample22.png" alt="이미지">
+						<figcaption>
+							<span class="option title">filename.png</span>
+							<span class="option">1234kb</span>
+						</figcaption>
+						<div class="ctrl"><button type="button" class="btn delete-one" aria-label="삭제"></button></div>
+					</figure>-->
+					<!--//item_기본 스타일-->
+		
+				</div>
+			</div>
+			<!--//upload type3-->
+
+
+
+			<script src="https://bghbmh.github.io/simple-ui-test/UploadFiles/bUploadFile.js"></script>
+
+			<script>
+				const uploadInstances = {}; 
+				const tempUrl = 'https://bghbmh.github.io/simple-ui-test/UploadFiles/icon-svg-double-paper.svg';
+
+				uploadInstances.mainimage = bUploadFiles.init({
+					loadBtn: document.querySelector(".example22 .upload-file-btn"),
+					fileBox: document.querySelector(".example22 .upload-file-box"),
+					multiple: false, //기본 true, 선택 사항: 단일 파일의 경우 false로 설정
+					onPreviewMarkUp: (itemTag, file, objectURL) => {
+						const image = file.type.startsWith('image/');
+						itemTag.innerHTML = `
+							<img src="${image ? objectURL : tempUrl}" alt="이미지">
+							<figcaption>
+								<span class="option title">${file.name}</span>
+								<span class="option">${(file.size / 1024).toFixed(2)} KB</span>
+							</figcaption>
+						`;
+					}
+				})
+
+				uploadInstances.subimage = bUploadFiles.init({
+					loadBtn: document.querySelector(".example33 .upload-file-btn"),
+					fileBox: document.querySelector(".example33 .upload-file-box"),
+					multiple: true, //기본 true, 선택 사항: 단일 파일의 경우 false로 설정
+					maxFiles : 7,
+					onPreviewMarkUp: (itemTag, file, objectURL) => {
+						const image = file.type.startsWith('image/');
+						itemTag.innerHTML = `
+							<img src="${image ? objectURL : tempUrl}" alt="이미지">
+							<figcaption>
+								<span class="option title">${file.name}</span>
+								<span class="option">${(file.size / 1024).toFixed(2)} KB</span>
+							</figcaption>
+						`;
+					}
+				})
+
+				uploadInstances.everyThing = bUploadFiles.init({
+					loadBtn: document.querySelector(".example11 .upload-file-btn"),
+					fileBox: document.querySelector(".example11 .upload-file-box"),
+					maxFiles : 0,//기본 0
+					onPreviewMarkUp: (itemTag, file, objectURL) => {
+						const image = file.type.startsWith('image/');
+						itemTag.innerHTML = `
+							<img src="${image ? objectURL : tempUrl}" alt="이미지">
+							<figcaption>
+								<span class="option title">${file.name}</span>
+								<span class="option">${(file.size / 1024).toFixed(2)} KB</span>
+							</figcaption>
+						`;
+					}
+				})
+			</script>
+
+		</section>
+		<!--//섹션 폼태그 기본 스타일-->	
+
+		
+		<!--//CONTENT-->
+	</div>
+	<!--//common content-->
+
+</main>
+<!--//common main-->
+
+</body>
+
+</html>
