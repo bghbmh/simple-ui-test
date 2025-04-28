@@ -49,7 +49,6 @@
 			<!--//섹션용 헤더-->
 			
 			<link rel="stylesheet" type="text/css" href="https://bghbmh.github.io/simple-ui-test/UploadFiles/bUploadFile.css">
-
 			<br><br>
 			upload type1__ <br><br>
 			<!--upload type1-->
@@ -129,62 +128,74 @@
 			</div>
 			<!--//upload type3-->
 
-
-
 			<script src="https://bghbmh.github.io/simple-ui-test/UploadFiles/bUploadFile.js"></script>
 
 			<script>
 				const uploadInstances = {}; 
 				const tempUrl = 'https://bghbmh.github.io/simple-ui-test/UploadFiles/icon-svg-double-paper.svg';
 
-				uploadInstances.mainimage = bUploadFiles.init({
-					loadBtn: document.querySelector(".example22 .upload-file-btn"),
-					fileBox: document.querySelector(".example22 .upload-file-box"),
-					multiple: false, //기본 true, 선택 사항: 단일 파일의 경우 false로 설정
-					onPreviewMarkUp: (itemTag, file, objectURL) => {
+				uploadInstances.everyThing = bUploadFiles.init({
+					loadBtn: document.querySelector(".example11 .upload-file-btn"),
+					fileBox: document.querySelector(".example11 .upload-file-box"),
+					maxFiles : 0,//기본 0
+					onPreviewMarkUp: ( file, objectURL) => {
 						const image = file.type.startsWith('image/');
-						itemTag.innerHTML = `
+						let fileItemWrap = document.createElement("figure");
+						fileItemWrap.setAttribute("class", "item");
+						fileItemWrap.innerHTML = `
 							<img src="${image ? objectURL : tempUrl}" alt="이미지">
 							<figcaption>
 								<span class="option title">${file.name}</span>
 								<span class="option">${(file.size / 1024).toFixed(2)} KB</span>
 							</figcaption>
 						`;
+						return fileItemWrap;
 					}
 				})
+
+
+				uploadInstances.mainimage = bUploadFiles.init({
+					loadBtn: document.querySelector(".example22 .upload-file-btn"),
+					fileBox: document.querySelector(".example22 .upload-file-box"),
+					multiple: false, //기본 true, 선택 사항: 단일 파일의 경우 false로 설정
+					onPreviewMarkUp: (file, objectURL) => {
+						const image = file.type.startsWith('image/');
+
+						let fileItemWrap = document.createElement("figure");
+						fileItemWrap.setAttribute("class", "item");
+						fileItemWrap.innerHTML = `
+							<img src="${image ? objectURL : tempUrl}" alt="이미지">
+							<figcaption>
+								<span class="option title">${file.name}</span>
+								<span class="option">${(file.size / 1024).toFixed(2)} KB</span>
+							</figcaption>
+						`;
+						return fileItemWrap;
+					}
+				})
+				
 
 				uploadInstances.subimage = bUploadFiles.init({
 					loadBtn: document.querySelector(".example33 .upload-file-btn"),
 					fileBox: document.querySelector(".example33 .upload-file-box"),
 					multiple: true, //기본 true, 선택 사항: 단일 파일의 경우 false로 설정
 					maxFiles : 7,
-					onPreviewMarkUp: (itemTag, file, objectURL) => {
+					onPreviewMarkUp: ( file, objectURL) => {
 						const image = file.type.startsWith('image/');
-						itemTag.innerHTML = `
+						let fileItemWrap = document.createElement("figure");
+						fileItemWrap.setAttribute("class", "item");
+						fileItemWrap.innerHTML = `
 							<img src="${image ? objectURL : tempUrl}" alt="이미지">
 							<figcaption>
 								<span class="option title">${file.name}</span>
 								<span class="option">${(file.size / 1024).toFixed(2)} KB</span>
 							</figcaption>
 						`;
+						return fileItemWrap;
 					}
 				})
 
-				uploadInstances.everyThing = bUploadFiles.init({
-					loadBtn: document.querySelector(".example11 .upload-file-btn"),
-					fileBox: document.querySelector(".example11 .upload-file-box"),
-					maxFiles : 0,//기본 0
-					onPreviewMarkUp: (itemTag, file, objectURL) => {
-						const image = file.type.startsWith('image/');
-						itemTag.innerHTML = `
-							<img src="${image ? objectURL : tempUrl}" alt="이미지">
-							<figcaption>
-								<span class="option title">${file.name}</span>
-								<span class="option">${(file.size / 1024).toFixed(2)} KB</span>
-							</figcaption>
-						`;
-					}
-				})
+				
 			</script>
 
 		</section>
