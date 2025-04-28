@@ -109,28 +109,43 @@
             const file = files[i];
             this.selectedFiles.push(file);
 
-            let item = document.createElement("figure");
-            item.setAttribute("class", "item");
-            item.dataset.fileName = file.name;
-
             // url 만듦
             const objectURL = window.URL.createObjectURL(file);
             this.objectURLs.set(file, objectURL); 
 
+
+			// let item = document.createElement("figure");
+            // item.setAttribute("class", "item");
+            // item.dataset.fileName = file.name;
+
+			let fileItemWrap = null;
             // 미리보기 함수 실행
             if (typeof this.handler.onPreviewMarkUp === "function") {
-                this.handler.onPreviewMarkUp(item, file, objectURL);
+                fileItemWrap = this.handler.onPreviewMarkUp( file, objectURL);
             }
+			if( !fileItemWrap ){
+				const image = file.type.startsWith('image/');
+				const tempUrl = 'https://bghbmh.github.io/simple-ui-test/UploadFiles/icon-svg-double-paper.svg';
+
+				fileItemWrap = this.CreateElement({tag : "figure", "class": "item", "data-file-name" : file.name });
+				fileItemWrap.innerHTML =`
+							<img src="${image ? objectURL : tempUrl}" alt="이미지">
+							<figcaption>
+								<span class="option title">${file.name}</span>
+								<span class="option">${(file.size / 1024).toFixed(2)} KB</span>
+							</figcaption>
+						`;
+			}
 
             // 하나씩 삭제
             const deleteButton = this.CreateElement({tag : "button", "type" : "button", "class": "btn delete-one", "aria-label" : "삭제"});
-            deleteButton.addEventListener("click", () =>  this.deleteFile(file, item) );
+            deleteButton.addEventListener("click", () =>  this.deleteFile(file, fileItemWrap) );
 
             const ctrl = this.CreateElement({tag : "div", class : 'ctrl'});
             ctrl.appendChild(deleteButton);
 
-            item.appendChild(ctrl); //삭제 버튼
-            this.handler.fileBox.appendChild(item);
+            fileItemWrap.appendChild(ctrl); //삭제 버튼
+            this.handler.fileBox.appendChild(fileItemWrap);
 
             if( this.handler.multiple ) this.checkSelectedFiles(); // 파일 개수 업데이트
             if( this.handler.multiple ) this.checkDeleteAllButton(); // 전체삭제 버튼 상태 업데이트
@@ -171,8 +186,10 @@
             this.handler.fileBox.removeChild(this.handler.fileBox.firstChild);
         }
 		
-		this.checkDeleteAllButton();
-		this.checkSelectedFiles();
+		if( this.handler.multiple ){
+			this.checkSelectedFiles();
+			this.checkDeleteAllButton();
+		} 
     }
 
 	setCountFiles(){
@@ -206,7 +223,7 @@
 
 	// 하나씩 삭제
 	deleteFile(fileToDelete, itemToRemove) {
-		//console.log("deleteFile - ", fileToDelete, itemToRemove  );
+		console.log("파일 삭제 로직 실행:", fileToDelete, itemToRemove  );
 
 		// URL 해지 
 		const objectURL = this.objectURLs.get(fileToDelete);
@@ -225,9 +242,10 @@
 			console.warn("fileBox에 삭제하려는 파일이 없습니다.", itemToRemove);
 		}
 		
-		if( this.handler.multiple )  this.checkSelectedFiles();
-
-		this.checkDeleteAllButton();
+		if( this.handler.multiple ){
+			this.checkSelectedFiles();
+			this.checkDeleteAllButton();
+		} 
 
 	}
 
